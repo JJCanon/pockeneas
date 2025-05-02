@@ -1,27 +1,26 @@
-name: Build and Push to DockerHub
+name: Docker Image CI
 
-on:
-  push:
-    branches: [master]
+on: 
+  push: 
+    branches: [ master ] 
+  pull_request: 
+    branches: [ master ] 
 
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
+jobs: 
+  build: 
+    runs-on: ubuntu-latest 
+    steps: 
+    - uses: actions/checkout@v4
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - name: docker login 
+      env: 
+        DOCKER_USER: ${{ secrets.DOCKERHUB_USER }} 
+        DOCKER_PASS: ${{ secrets.DOCKERHUB_PASS }} 
+      run: | 
+        docker login -u $DOCKER_USER -p $DOCKER_PASS
 
-    - name: Log in to DockerHub
-      uses: actions/checkout@v4
-      with:
-        username: ${{ secrets.DOCKERHUB_USER }}
-        password: ${{ secrets.DOCKERHUB_PASS }}
+    - name: Build the Docker image 
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USER }}/pokenea:latest
 
-    - name: Build and push image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USER }}/pokenea:latest
-
+    - name: Docker Push 
+      run: docker push ${{ secrets.DOCKERHUB_USER }}/pokenea:latest

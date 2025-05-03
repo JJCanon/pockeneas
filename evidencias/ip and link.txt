@@ -1,0 +1,11 @@
+ip lider: 13.218.20.100 (debido a que las instancias no están enlazadas a una ip elástica para ahorrar creditos, esta puede cambiar, porfa contactarse con el estudiante Juan José Cañón Díaz para la nueva ip en caso de que no funcione la proporcionada)
+
+links:
+
+de la app:
+http://13.218.20.100:5000/pokenea-frase
+http://13.218.20.100:5000/pokenea-info
+
+
+del repositorio:
+https://github.com/JJCanon/pockeneas
